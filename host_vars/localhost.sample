@@ -1,0 +1,11 @@
+# file: host_vars/localhost
+
+#
+# roles/local_users
+#
+local_users:
+  jdoe:
+    fullname: John Doe
+    email: john.doe@example.com
+    groups: wheel
+    shell: /bin/bash
