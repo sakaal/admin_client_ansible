@@ -5,3 +5,4 @@
   roles:
   - common
   - local_users
+  - sensitive_data

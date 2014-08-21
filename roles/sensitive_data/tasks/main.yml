@@ -1,0 +1,11 @@
+# file: roles/sensitive_data/tasks/main.yml
+
+# Sensitive data management allows deploying and backing up private credentials
+# such as digital certificates, private key materials, and password files
+# without writing them in clear text.
+
+- yum: pkg=cryptsetup state=present
+
+- name: Sensitive data management initialization script
+  sudo: yes
+  template: src=init_sensitive_data.j2 dest=/usr/local/sbin/init_sensitive_data owner=root group=root mode=0700 force=no backup=no

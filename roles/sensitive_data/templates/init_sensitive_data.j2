@@ -1,0 +1,70 @@
+#!/bin/bash
+# file: init_sensitive_data
+
+# Use this script to initialize a new encrypted volume
+# for sensitive data management.
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+set -o errexit
+
+FSPATH=/root/sensitive_data.img
+LOOPD=$(losetup -f)
+MOUNTP=/mnt/sensitive_data
+SIZE=64
+
+if [[ -f $FSPATH ]]; then
+    echo "$FSPATH already exists!"
+    exit 1
+fi
+
+function cleanup {
+    set +o errexit
+
+    if grep -qs "$MOUNTP" /proc/mounts; then
+        echo Encrypted volume available at $MOUNTP
+        exit 0
+    fi
+    echo Removing the mountpoint $MOUNTP
+    rmdir $MOUNTP
+    cryptsetup close sensitive_data
+    echo Detaching the loop device
+    losetup -d $LOOPD
+    echo Removing the image
+    rm $FSPATH
+}
+
+trap cleanup EXIT SIGHUP SIGINT SIGTERM
+
+echo Reserving a sparse image at $FSPATH
+dd of=$FSPATH bs=1M count=0 seek=$SIZE
+
+echo Setting the image file permissions
+chmod 600 $FSPATH
+
+echo Preparing the loop device $LOOPD
+losetup $LOOPD $FSPATH
+
+echo Formatting and opening the encrypted device
+cryptsetup -y luksFormat $LOOPD
+cryptsetup open --type luks $LOOPD sensitive_data
+
+echo Status
+cryptsetup status sensitive_data
+
+echo Wiping clean and allocating the data blocks
+set +o errexit
+dd if=/dev/zero of=/dev/mapper/sensitive_data
+set -o errexit
+
+echo Creating the file system
+mkfs.ext4 /dev/mapper/sensitive_data
+
+echo Mounting the file system at $MOUNTP
+mkdir -p $MOUNTP
+mount /dev/mapper/sensitive_data $MOUNTP
+
+trap - EXIT SIGHUP SIGINT SIGTERM
