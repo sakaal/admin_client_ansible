@@ -13,6 +13,8 @@ from outside over the Internet.
 For security reasons, administrative client systems
 are kept separate from general purpose personal computers.
 
+![Deployment diagram](admin_client_deployment.png "Deployment diagram")
+
 Current implementation
 ----------------------
 
