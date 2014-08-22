@@ -82,3 +82,39 @@ Deployment procedure
    or otherwise needed. Then run:
 
         ansible-playbook -K admin_client.yml -i local
+
+1. If you have a backup copy of an existing sensitive data image,
+   look up the passphrase in the document safe and restore the backup.
+   Make sure that the file permissions are restricted
+   to the service administrators only. Then open it:
+
+        sudo open_sensitive_data
+
+1. If you do not have a sensitive data image yet,
+   then generate a new strong passphrase and record it
+   the same way you did the local access credentials above.
+   Initialize a new sensitive data image using the passphrase:
+
+        sudo init_sensitive_data
+
+1. If the reason why you are deploying a new ACS is that there was a
+   security incident, then consider revoking or at least changing all
+   the private keys on the sensitive data volume, if any.
+
+1. Configure all the required keys, certificates, and other security
+   critical settings as appropriate on the sensitive data volume.
+
+1. Close the sensitive data volume and make new backup copies
+   on at least two removable media devices. Check that the backup
+   storage devices have several years of life left. Keep offline
+   backups the same way as the local access credentials above.
+
+1. Authorize relevant keys on the new ACS
+   for access to the service instance configuration source repository.
+   Usually, this means registering an ACS user's public key with
+   the source respository service.
+
+1. Retrieve the latest service instance configuration data from the
+   source respository.
+
+The ACS is now ready for use.
