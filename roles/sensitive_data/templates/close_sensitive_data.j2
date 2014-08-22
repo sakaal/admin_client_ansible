@@ -1,0 +1,41 @@
+#!/bin/bash
+# file: close_sensitive_data
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+set -o errexit
+
+FSPATH=/root/sensitive_data.img
+LOOPD=$(losetup -j $FSPATH | cut -d: -f1)
+MOUNTP=/mnt/sensitive_data
+
+if [ ! -f "$FSPATH" ]; then
+    echo "$FSPATH does not exist!"
+    exit 1
+fi
+
+if [ -z "$LOOPD" ]; then
+    echo "No loop device associated with $FSPATH found."
+    exit 1
+fi
+
+if grep -qs "$MOUNTP" /proc/mounts; then
+    echo Unmounting $MOUNTP
+    umount $MOUNTP
+fi
+
+set +o errexit
+
+if [ -d "$MOUNTP" ]; then
+    echo Removing the mount point $MOUNTP
+    rmdir $MOUNTP
+fi
+
+echo Closing the encrypted device
+cryptsetup close sensitive_data
+
+echo Detaching the loop device $LOOPD
+losetup -d $LOOPD

@@ -1,0 +1,45 @@
+#!/bin/bash
+# file: open_sensitive_data
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+set -o errexit
+
+FSPATH={{ sensitive_data_image | mandatory }}
+LOOPD=$(losetup -f)
+MOUNTP={{ sensitive_data_mount_point | mandatory }}
+
+if grep -qs "$MOUNTP" /proc/mounts; then
+    echo Already mounted at $MOUNTP
+    exit 0
+fi
+
+if [[ ! -f $FSPATH ]]; then
+    echo "$FSPATH does not exist!"
+    exit 1
+fi
+
+function cleanup {
+    set +o errexit
+
+    cryptsetup close sensitive_data
+    echo Detaching the loop device
+    losetup -d $LOOPD
+}
+
+trap cleanup EXIT SIGHUP SIGINT SIGTERM
+
+echo Preparing the loop device $LOOPD
+losetup $LOOPD $FSPATH
+
+echo Opening the encrypted device
+cryptsetup open --type luks $LOOPD sensitive_data
+
+echo Mounting the file system at $MOUNTP
+mkdir -p $MOUNTP
+mount /dev/mapper/sensitive_data $MOUNTP
+
+trap - EXIT SIGHUP SIGINT SIGTERM

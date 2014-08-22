@@ -11,9 +11,9 @@ fi
 
 set -o errexit
 
-FSPATH=/root/sensitive_data.img
+FSPATH={{ sensitive_data_image | mandatory }}
 LOOPD=$(losetup -f)
-MOUNTP=/mnt/sensitive_data
+MOUNTP={{ sensitive_data_mount_point | mandatory }}
 SIZE=64
 
 if [[ -f $FSPATH ]]; then
@@ -28,7 +28,7 @@ function cleanup {
         echo Encrypted volume available at $MOUNTP
         exit 0
     fi
-    echo Removing the mountpoint $MOUNTP
+    echo Removing the mount point $MOUNTP
     rmdir $MOUNTP
     cryptsetup close sensitive_data
     echo Detaching the loop device

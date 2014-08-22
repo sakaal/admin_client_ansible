@@ -1,0 +1,4 @@
+# file: roles/sensitive_data/vars/main.yml
+
+sensitive_data_image: /root/sensitive_data.img
+sensitive_data_mount_point: /mnt/sensitive_data

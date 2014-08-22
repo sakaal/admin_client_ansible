@@ -8,4 +8,12 @@
 
 - name: Sensitive data management initialization script
   sudo: yes
-  template: src=init_sensitive_data.j2 dest=/usr/local/sbin/init_sensitive_data owner=root group=root mode=0700 force=no backup=no
+  template: src=init_sensitive_data.j2 dest=/usr/local/sbin/init_sensitive_data owner=root group=root mode=0700
+
+- name: Sensitive data volume opening script
+  sudo: yes
+  template: src=open_sensitive_data.j2 dest=/usr/local/sbin/open_sensitive_data owner=root group=root mode=0700
+
+- name: Sensitive data volume closing script
+  sudo: yes
+  template: src=close_sensitive_data.j2 dest=/usr/local/sbin/close_sensitive_data owner=root group=root mode=0700
