@@ -1,7 +1,27 @@
 # file: roles/common/tasks/main.yml
 
 - name: Enable Ansible under SELinux
+  sudo: yes
   yum: pkg=libselinux-python state=present
+
+- name: Local DNS resolver trusted for the DNSSEC validation
+  sudo: yes
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
+  yum: pkg=dnssec-trigger state=present
+
+- name: Enable DNSSEC validation
+  sudo: yes
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
+  service: name=dnssec-triggerd enabled=yes state=started
+
+- name: Single Packet Authentication (SPA) support
+  sudo: yes
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
+  yum: pkg=fwknop state=present
+
+- name: Non-interactive SSH password authentication support
+  sudo: yes
+  yum: pkg=sshpass state=present
 
 - yum: pkg=firewalld state=present
 - yum: pkg=gdb state=present
