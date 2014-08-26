@@ -14,6 +14,9 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
   service: name=dnssec-triggerd enabled=yes state=started
 
+- name: Enable SSH host key DNS verification (SSHFP)
+  lineinfile: dest=/etc/ssh/ssh_config regexp="^VerifyHostKeyDNS" line="VerifyHostKeyDNS yes" state=present
+
 - name: Single Packet Authentication (SPA) support
   sudo: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
