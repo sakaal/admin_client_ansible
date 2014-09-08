@@ -7,7 +7,7 @@
 - name: Configure sudoers
   lineinfile: dest=/etc/sudoers state=present regexp="{{ item.regexp }}" line="{{ item.line }}" validate='visudo -qcf %s'
   with_items:
-    - regexp: '^%wheel ALL\='
+    - regexp: '^%wheel\s+ALL='
       line: '%wheel ALL=(ALL) NOPASSWD:ALL'
     - regexp: '^Defaults\s+secure_path'
       line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
