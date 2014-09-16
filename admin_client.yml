@@ -5,4 +5,5 @@
   roles:
   - common
   - local_users
+  - fedora_rpm_fusion
   - sensitive_data
