@@ -1,0 +1,11 @@
+# file: roles/subversion_repos/tasks/main.yml
+
+- name: Subversion
+  sudo: yes
+  yum: pkg=subversion state=present
+
+- name: Checkout sources from Subversion repositories
+  sudo: yes
+  sudo_user: "{{ item.user | mandatory }}"
+  subversion: repo={{ item.url | mandatory }} dest={{ item.dest | mandatory }}
+  with_items: subversion_repos

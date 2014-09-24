@@ -9,3 +9,12 @@ local_users:
     email: john.doe@example.com
     groups: wheel
     shell: /bin/bash
+
+#
+# roles/subversion_repos
+#
+subversion_repos:
+# Apache Shiro - Java security framework
+- url: "http://svn.apache.org/repos/asf/shiro/tags/shiro-root-1.2.3"
+  user: jdoe
+  dest: "~/workspace/shiro-root-1.2.3"
