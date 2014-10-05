@@ -2,12 +2,12 @@
 
 - name: Enable Ansible under SELinux
   sudo: yes
-  yum: pkg=libselinux-python state=present
+  yum: name=libselinux-python
 
 - name: Local DNS resolver trusted for the DNSSEC validation
   sudo: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
-  yum: pkg=dnssec-trigger state=present
+  yum: name=dnssec-trigger
 
 - name: Enable DNSSEC validation
   sudo: yes
@@ -20,25 +20,38 @@
 - name: Single Packet Authentication (SPA) support
   sudo: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
-  yum: pkg=fwknop state=present
+  yum: name=fwknop
 
 - name: Non-interactive SSH password authentication support
   sudo: yes
-  yum: pkg=sshpass state=present
+  yum: name=sshpass
 
-- yum: pkg=firewalld state=present
-- yum: pkg=gdb state=present
-- yum: pkg=git state=present
-- yum: pkg=gnupg state=present
-- yum: pkg=htop state=present
-- yum: pkg=jwhois state=present
-- yum: pkg=lftp state=present
-- yum: pkg=man state=present
-- yum: pkg=maven state=present
-- yum: pkg=nano state=present
-- yum: pkg=postgresql state=present
-- yum: pkg=python-boto state=present
-- yum: pkg=rkhunter state=present
-- yum: pkg=screen state=present
-- yum: pkg=wget state=present
+- name: Common packages
+  with_items:
+  - firewalld
+  - gdb
+  - git
+  - gnupg
+  - htop
+  - jwhois
+  - lftp
+  - man
+  - maven
+  - nano
+  - postgresql
+  - python-boto
+  - rkhunter
+  - screen
+  - wget
+  sudo: yes
+  yum: name={{ item }}
+
 - service: name=firewalld enabled=yes state=started
+
+- name: HArdware Volatile Entropy Gathering and Expansion (HAVEGE) daemon
+  sudo: yes
+  yum: name=haveged
+
+- name: Enable the entropy service
+  sudo: yes
+  service: name=haveged enabled=yes state=started
