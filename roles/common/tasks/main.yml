@@ -35,10 +35,13 @@
   - htop
   - jwhois
   - lftp
+  - lookup
+  - lv
   - man
   - maven
   - nano
   - postgresql
+  - pv
   - python-boto
   - rkhunter
   - screen
