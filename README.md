@@ -39,7 +39,10 @@ Prerequisites
 
 1. Basic Linux system administration skills
 1. File system encryption know-how
-1. Two or more physical document safes with one or more people who have administrative access
+1. Two or more physical
+   [document safes](https://github.com/sakaal/service_platform_ansible/wiki/Document-safe)
+   with one or more people who have
+   [administrative access](https://github.com/sakaal/service_platform_ansible/wiki/Administrative-access-plan)
 
 Deployment procedure
 --------------------
