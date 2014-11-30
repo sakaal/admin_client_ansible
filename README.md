@@ -75,8 +75,8 @@ Deployment procedure
 1. As the local user on the newly installed client, prepare the ACS configuration deployment:
 
         sudo yum install git ansible
-        git clone https://github.com/sakaal/admin_client.git
-        cd admin_client
+        git clone https://github.com/sakaal/admin_client_ansible.git
+        cd admin_client_ansible
         cp host_vars/localhost.sample host_vars/localhost
 
 1. Edit `host_vars/localhost` with the local user account details.
