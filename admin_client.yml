@@ -1,3 +1,4 @@
+---
 # file: admin_client.yml
 
 - hosts: localhost
@@ -8,3 +9,4 @@
   - fedora_rpm_fusion
   - sensitive_data
   - subversion_repos
+

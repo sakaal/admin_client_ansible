@@ -1,7 +1,15 @@
+---
 # file: roles/local_users/tasks/main.yml
 
 - name: Local user accounts
-  user: name={{ item.key }} comment="{{ item.value.fullname | mandatory }}" append=yes groups="{{ item.value.groups }}" shell="{{ item.value.shell | default('/bin/bash') }}" generate_ssh_key=yes ssh_key_comment="{{ item.key }}@{{ ansible_fqdn }}-{{ ansible_date_time.iso8601 }}" state=present
+  user: name={{ item.key }}
+        comment="{{ item.value.fullname | mandatory }}"
+        append=yes
+        groups="{{ item.value.groups }}"
+        shell="{{ item.value.shell | default('/bin/bash') }}"
+        generate_ssh_key=yes
+        ssh_key_comment="{{ item.key }}@{{ ansible_fqdn }}-{{ ansible_date_time.iso8601 }}"
+        state=present
   with_dict: local_users
 
 - name: Configure sudoers
