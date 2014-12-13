@@ -142,6 +142,16 @@ Before migration to a new ACS:
 1. Make sure that the latest data on the sensitive data volume has been
    backed up as appropriate, according to the usual practice.
 
+1. If you have pending or uncommitted changes in any of the local working copies
+   of CMDBs or other repositories, finish them and either commit or discard
+   local changes.
+   - Remove local copies of repositories, which are fully up to date and in sync
+     with their remote origins. This is safer than dependence on a successful
+     migration.
+   - If you must leave unfinished work in your local copies of any repositories,
+     then prepare for the risk of delay or loss of work in case anything goes
+     wrong with the migration or there is delay in setting up the new ACS.
+
 1. Create an archive of all the other local data that you intend to keep.
    - Key rings and trust databases (GPG, Java KeyStores)
    - Home directories (personal identities, settings, workspaces, documents,
