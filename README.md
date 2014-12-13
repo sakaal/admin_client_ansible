@@ -125,3 +125,53 @@ keep administrative client systems completely separate from development environm
      storing administrative mail. IMAP is recommended over POP.
 
 The ACS is now ready for use.
+
+## Migration procedure
+
+Service administrators will need to change their ACS from time to time.
+
+After an ACS has been in use, some important data is likely to
+have accumulated locally even though the system is for administrative use only.
+- Avoid storing important files in any unusual or nonstandard
+  locations. Otherwise they are at risk to be lost in migration.
+- You don't need to worry about the configuration data that is
+  managed in this CMDB.
+
+Before migration to a new ACS:
+
+1. Make sure that the latest data on the sensitive data volume has been
+   backed up as appropriate, according to the usual practice.
+
+1. Create an archive of all the other local data that you intend to keep.
+   - Key rings and trust databases (GPG, Java KeyStores)
+   - Home directories (personal identities, settings, workspaces, documents,
+     pictures, downloads, etc.)
+
+1. Encrypt the archive.
+
+1. Copy the encrypted archive to a removable media device or to your private
+   online data storage service.
+
+1. Back up the encryption keys on a secure removable media device
+   or make a physical note.
+
+1. Prepare the new ACS according to the usual deployment procedure above.
+   - Create new local storage encryption, root and other user account passwords.
+     Do not reuse the same local security credentials on the new ACS.
+
+1. Copy the archive to the new ACS.
+
+1. Decipher the archive on the new ACS.
+
+1. Restore the data on the new ACS.
+
+1. After having made sure that all the data has been successfully restored
+   on the new ACS:
+   - Shred all the old copies on the old ACS.
+   - Shred all copies of the migration archive.
+   - Shred all copies of the temporary encryption keys.
+
+1. Revoke or otherwise invalidate whatever keys were specific to the old ACS.
+   Destroy copies of the obsolete credentials from the document safes.
+
+1. Securely erase and decommission the old ACS.
