@@ -1,3 +1,4 @@
+---
 # file: roles/common/tasks/main.yml
 
 - name: Enable Ansible under SELinux
@@ -58,3 +59,20 @@
 - name: Enable the entropy service
   sudo: yes
   service: name=haveged enabled=yes state=started
+
+#
+# http://keyring.debian.org/creating-key.html
+#
+- name: Configure GnuPG
+  with_items:
+  - key: personal-digest-preferences
+    val: SHA256
+  - key: cert-digest-algo
+    val: SHA256
+  - key: linedefault-preference-list
+    val: SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
+  lineinfile: dest="~/.gnupg/gpg.conf"
+              regexp="^{{ item.key }}"
+              line="{{ item.key }} {{ item.val | mandatory }}"
+              insertafter=EOF
+              state=present
