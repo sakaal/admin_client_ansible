@@ -1,7 +1,6 @@
 <!--- file: README.md -->
 
-Administrative Client System (ACS)
-==================================
+# Administrative Client System (ACS)
 
 This is a configuration management database (CMDB)
 for tracking configuration items (CIs) related to
@@ -15,8 +14,7 @@ are kept separate from general purpose personal computers.
 
 ![Deployment diagram](admin_client_deployment.png "Deployment diagram")
 
-Current implementation
-----------------------
+## Current implementation
 
 This Git repository contains Ansible playbooks for
 the setup of an environment based on:
@@ -34,8 +32,7 @@ ongoing development and its administration is akin to software development.
 With more mature services, install only the tools that you need and
 keep administrative client systems completely separate from development environments.
 
-Prerequisites
--------------
+## Prerequisites
 
 1. Basic Linux system administration skills
 1. File system encryption know-how
@@ -44,8 +41,7 @@ Prerequisites
    with one or more people who have
    [administrative access](https://github.com/sakaal/service_platform_ansible/wiki/Administrative-access-plan)
 
-Deployment procedure
---------------------
+## Deployment procedure
 
 1. Prepare the ACS hardware, BIOS, etc.
 
@@ -119,5 +115,13 @@ Deployment procedure
 
 1. Retrieve the latest service instance configuration data from the
    source respository.
+
+1. Manually configure a local mail user agent (MUA) with the mail account(s)
+   that you are using for administrative purposes. A local MUA is necessary for
+   performing cryptographic operations on messages on the client before
+   contacting the mail server.
+   - Configure PGP and S/MIME for digital signing and encryption of messages.
+   - The mail service should be trusted more than an ACS for the purpose of
+     storing administrative mail. IMAP is recommended over POP.
 
 The ACS is now ready for use.
