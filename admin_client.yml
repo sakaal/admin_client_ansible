@@ -9,4 +9,5 @@
   - fedora_rpm_fusion
   - sensitive_data
   - subversion_repos
+  - ldap_browser
 

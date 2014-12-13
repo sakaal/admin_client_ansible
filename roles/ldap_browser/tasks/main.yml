@@ -1,0 +1,30 @@
+---
+# file: roles/ldap_browser/tasks/main.yml
+
+# http://jxplorer.org/downloads/
+
+- set_fact:
+    jxplorer_archive: "jxplorer-3.3.1-linux-installer.run"
+    jxplorer_md5sum: "19d7f034b3b0687800c0efb2f6ec35ab"
+
+- set_fact:
+    jxplorer_url: "http://sourceforge.net/projects/jxplorer/files/jxplorer/version%203.3.1/{{ jxplorer_archive | mandatory }}/download"
+
+- name: Download the JXplorer archive
+  sudo: yes
+  command: chdir=/opt
+           creates={{ jxplorer_archive | mandatory }}
+           wget -nv --no-cookies --no-check-certificate
+           {{ jxplorer_url | mandatory }} -O {{ jxplorer_archive }}
+
+- name: Verify the JXplorer archive
+  sudo: yes
+  stat: path="/opt/{{ jxplorer_archive }}"
+  register: jxplorer
+  failed_when: jxplorer.stat.md5 != "{{ jxplorer_md5sum | mandatory }}"
+
+- name: Self-executable JXplorer archive
+  sudo: yes
+  file: path="/opt/{{ jxplorer_archive }}" mode=774
+
+# Run the installer manually.
