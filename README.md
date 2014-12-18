@@ -174,6 +174,14 @@ Before migration to a new ACS:
 1. Decipher the archive on the new ACS.
 
 1. Restore the data on the new ACS.
+   - Restore the GnuPG public and secret keyrings and the trust database:
+
+        ~/.gnupg/
+        pubring.gpg
+        secring.gpg
+        trustdb.gpg
+
+   - Import the PGP keys and S/MIME certificates to the mail user agent.
 
 1. After having made sure that all the data has been successfully restored
    on the new ACS:
