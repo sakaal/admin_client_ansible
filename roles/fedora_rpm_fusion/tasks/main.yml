@@ -1,7 +1,13 @@
 # file: roles/fedora_rpm_fusion/tasks/main.yml
 
+- name: Check enabled repositories
+  command: yum repolist enabled
+  register: yum_repolist
+  changed_when: False
+
 - name: Enable the RPM Fusion repositories for Fedora 14 and above
-  shell: >
-         yum localinstall --assumeyes --nogpgcheck
+  when: not 'rpmfusion' in yum_repolist.stdout
+  sudo: yes
+  shell: yum localinstall --assumeyes --nogpgcheck
          http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
          http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm

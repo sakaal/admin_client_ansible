@@ -2,6 +2,8 @@
 # file: roles/local_users/tasks/main.yml
 
 - name: Local user accounts
+  with_dict: local_users
+  sudo: yes
   user: name={{ item.key }}
         comment="{{ item.value.fullname | mandatory }}"
         append=yes
@@ -10,24 +12,26 @@
         generate_ssh_key=yes
         ssh_key_comment="{{ item.key }}@{{ ansible_fqdn }}-{{ ansible_date_time.iso8601 }}"
         state=present
-  with_dict: local_users
 
 - name: Configure sudoers
-  lineinfile: dest=/etc/sudoers state=present regexp="{{ item.regexp }}" line="{{ item.line }}" validate='visudo -qcf %s'
   with_items:
     - regexp: '^%wheel\s+ALL='
       line: '%wheel ALL=(ALL) NOPASSWD:ALL'
     - regexp: '^Defaults\s+secure_path'
       line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
+  sudo: yes
+  lineinfile: dest=/etc/sudoers state=present regexp="{{ item.regexp }}" line="{{ item.line }}" validate='visudo -qcf %s'
 
 - name: Local user Git configurations
-  template: src=gitconfig.j2 dest=/home/{{ item.key }}/.gitconfig owner={{ item.key }} group={{ item.key }} mode=0664 force=no
   with_dict: local_users
+  template: src=gitconfig.j2 dest=/home/{{ item.key }}/.gitconfig owner={{ item.key }} group={{ item.key }} mode=0664 force=no
 
 - name: Local user Maven settings directories
-  file: path=/home/{{ item.key }}/.m2 state=directory owner={{ item.key }} group={{ item.key }}
   with_dict: local_users
+  sudo: yes
+  file: path=/home/{{ item.key }}/.m2 state=directory owner={{ item.key }} group={{ item.key }}
 
 - name: Local user Maven settings
-  template: src=settings.xml.j2 dest=/home/{{ item.key }}/.m2/settings.xml owner={{ item.key }} group={{ item.key }} mode=0660 force=no backup=yes
   with_dict: local_users
+  sudo: yes
+  template: src=settings.xml.j2 dest=/home/{{ item.key }}/.m2/settings.xml owner={{ item.key }} group={{ item.key }} mode=0660 force=no backup=yes
