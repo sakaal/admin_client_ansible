@@ -10,6 +10,14 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
   yum: name=dnssec-trigger
 
+- name: Enable EDNS0
+  sudo: yes
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
+  lineinfile: dest=/etc/profile.d/resolv.sh
+              create=yes
+              regexp="^RES_OPTIONS=.*$"
+              line="RES_OPTIONS=edns0"
+
 - name: Enable DNSSEC validation
   sudo: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
@@ -72,10 +80,11 @@
     val: SHA256
   - key: cert-digest-algo
     val: SHA256
-  - key: linedefault-preference-list
+  - key: default-preference-list
     val: SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
   lineinfile: dest="~/.gnupg/gpg.conf"
               regexp="^{{ item.key }}"
               line="{{ item.key }} {{ item.val | mandatory }}"
               insertafter=EOF
+              create=yes
               state=present
