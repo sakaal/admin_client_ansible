@@ -15,8 +15,8 @@
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 20
   lineinfile: dest=/etc/profile.d/resolv.sh
               create=yes
-              regexp="^RES_OPTIONS=.*$"
-              line="RES_OPTIONS=edns0"
+              regexp="^.*RES_OPTIONS=.*$"
+              line="export RES_OPTIONS=edns0"
 
 - name: Enable DNSSEC validation
   sudo: yes
