@@ -40,6 +40,7 @@
   with_items:
   - firewalld
   - gdb
+  - gimp
   - git
   - gnupg
   - htop
@@ -55,6 +56,7 @@
   - python-boto
   - rkhunter
   - screen
+  - sysstat
   - wget
   sudo: yes
   yum: name={{ item }}
