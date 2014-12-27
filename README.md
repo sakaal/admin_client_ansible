@@ -45,35 +45,40 @@ keep administrative client systems completely separate from development environm
 
 1. Prepare the ACS hardware, BIOS, etc.
 
-1. Install the operating system from a trusted source, such as a checksum-verified installation medium.
+1. Install the operating system from a trusted source,
+   such as a checksum-verified installation medium.
 
 1. Encrypt the file system.
 
 1. Create a local user account during the install.
 
-1. Record the local access credentials offline (using a physical writing instrument and materials):
-    - A label stating: "Administrative Client System"
-    - Identification of the ACS hardware and network interface physical address
-    - Fixed network settings, such as hostname, domain name, and static network address, if any
-    - Date and time of deployment
-      according to Coordinated Universal Time (UTC)
-      in ISO 8601 format (`YYYY-MM-DD hh:mmZ`)
-    - Name and contact information of the person responsible for the deployment
-    - The local access credentials:
-        - File system encryption passphrase
-        - Root account password
-        - Your other local user account passwords
+1. Record the local access credentials offline
+   (using a physical writing instrument and materials):
+   - A label stating: "Administrative Client System"
+   - Identification of the ACS hardware and network interface physical address
+   - Fixed network settings, such as hostname, domain name,
+     and static network address, if any
+   - Date and time of deployment
+     according to Coordinated Universal Time (UTC)
+     in ISO 8601 format (`YYYY-MM-DD hh:mmZ`)
+   - Name and contact information of the person responsible for the deployment
+   - The local access credentials:
+      - File system encryption passphrase
+      - Root account password
+      - Your other local user account passwords
 
 1. Keep redundant copies of the local access credentials secure in offline document safes
    at two or more geographically separated locations,
    one of which may reside with each person responsible for administrative duties.
 
-1. As the local user on the newly installed client, prepare the ACS configuration deployment:
+1. As the local user on the newly installed client,
+   prepare the ACS configuration deployment:
 
         sudo yum install git ansible
         git clone https://github.com/sakaal/admin_client_ansible.git
         cd admin_client_ansible
         cp host_vars/localhost.sample host_vars/localhost
+   - You can use an SSH URI for cloning the repository, if you have SSH access.
 
 1. Edit `host_vars/localhost` with the local user account details.
    Add also the already existing account that you created during install.
