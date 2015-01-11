@@ -6,7 +6,6 @@
   - esc
   - pam_pkcs11
   - coolkey
-  - ifd-egate
   - ccid
   - gdm
   - authconfig
