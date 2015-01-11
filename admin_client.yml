@@ -5,6 +5,7 @@
   connection: local
   roles:
   - common
+  - smart_cards
   - dnssec_validation
   - local_users
   - fedora_rpm_fusion

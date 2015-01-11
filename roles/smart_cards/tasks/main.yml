@@ -1,0 +1,22 @@
+---
+# file: roles/common/tasks/smart_cards.yml
+
+- name: Smart Card support packages
+  with_items:
+  - esc
+  - pam_pkcs11
+  - coolkey
+  - ifd-egate
+  - ccid
+  - gdm
+  - authconfig
+  - authconfig-gtk
+  - opensc
+  - mozilla-esteid
+  sudo: yes
+  yum: name={{ item }}
+
+- name: Enable the Smart Card reader
+  sudo: yes
+  service: name=pcscd enabled=yes state=started
+
