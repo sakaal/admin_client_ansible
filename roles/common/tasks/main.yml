@@ -33,6 +33,7 @@
   - postgresql
   - pv
   - python-boto
+  - python-passlib
   - rkhunter
   - screen
   - sysstat
