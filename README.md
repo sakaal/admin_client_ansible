@@ -67,8 +67,8 @@ keep administrative client systems completely separate from development environm
       - Root account password
       - Your other local user account passwords
 
-1. Keep redundant copies of the local access credentials secure in offline document safes
-   at two or more geographically separated locations,
+1. Keep redundant copies of the local access credentials secure in offline
+   document safes at two or more geographically separated locations,
    one of which may reside with each person responsible for administrative duties.
 
 1. As the local user on the newly installed client,
@@ -86,6 +86,10 @@ keep administrative client systems completely separate from development environm
    or otherwise needed. Then run:
 
         ansible-playbook -K admin_client.yml -i local
+
+1. Create or edit `/root/.vault_pass.txt` with the configuration database
+   encryption password as a single line. Keep a backup copy of the password
+   in the document safe.
 
 1. If you have a backup copy of an existing sensitive data image,
    look up the passphrase in the document safe and restore the backup.
