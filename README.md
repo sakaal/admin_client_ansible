@@ -87,9 +87,13 @@ keep administrative client systems completely separate from development environm
 
         ansible-playbook -K admin_client.yml -i local
 
-1. Create or edit `/root/.vault_pass.txt` with the configuration database
+1. Create or edit `~/.vault_pass.txt` with the configuration database
    encryption password as a single line. Keep a backup copy of the password
-   in the document safe.
+   in the document safe. Copy the password file for use with sudo:
+
+        sudo cp ~/.vault_pass.txt /root/.vault_pass.txt
+        sudo chown root:root /root/.vault_pass.txt
+        sudo chmod 0600 /root/.vault_pass.txt
 
 1. If you have a backup copy of an existing sensitive data image,
    look up the passphrase in the document safe and restore the backup.

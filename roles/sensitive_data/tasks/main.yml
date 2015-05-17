@@ -25,12 +25,10 @@
             dest=/usr/local/sbin/close_sensitive_data
             owner=root group=root mode=0700
 
-#
-# Use an absolute path for the Ansible Vault password file
-# to allow it work with any user who has access to the file.
-#
 - name: Ansible Vault password file location
   sudo: yes
-  lineinfile: dest=/etc/ansible/ansible.cfg
-              regexp='^vault_password_file\s*=.*$'
-              line='vault_password_file = /root/.vault_pass.txt'
+  ini_file: dest=/etc/ansible/ansible.cfg
+            section=defaults
+            option=vault_password_file
+            value=~/.vault_pass.txt
+            backup=yes
