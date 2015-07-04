@@ -74,10 +74,11 @@ keep administrative client systems completely separate from development environm
 1. As the local user on the newly installed client,
    prepare the ACS configuration deployment:
 
-        sudo yum install git ansible
+        sudo dnf install git ansible
         git clone https://github.com/sakaal/admin_client_ansible.git
         cd admin_client_ansible
         cp host_vars/localhost.sample host_vars/localhost
+   - You can use `yum` instead of `dnf`, if it is missing.
    - You can use an SSH URI for cloning the repository, if you have SSH access.
 
 1. Edit `host_vars/localhost` with the local user account details.

@@ -5,7 +5,7 @@
 # such as digital certificates, private key materials, and password files
 # without writing them in clear text.
 
-- yum: pkg=cryptsetup state=present
+- dnf: name=cryptsetup state=present
 
 - name: Sensitive data management initialization script
   sudo: yes

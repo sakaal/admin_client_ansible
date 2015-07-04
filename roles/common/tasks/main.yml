@@ -1,18 +1,22 @@
 ---
 # file: roles/common/tasks/main.yml
 
+- name: Dandified Yum
+  sudo: yes
+  yum: name=dnf
+
 - name: Enable Ansible under SELinux
   sudo: yes
-  yum: name=libselinux-python
+  dnf: name=libselinux-python
 
 - name: Single Packet Authentication (SPA) support
   sudo: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
-  yum: name=fwknop
+  dnf: name=fwknop
 
 - name: Non-interactive SSH password authentication support
   sudo: yes
-  yum: name=sshpass
+  dnf: name=sshpass
 
 - name: Common packages
   with_items:
@@ -25,6 +29,7 @@
   - jwhois
   - lftp
   - lookup
+  - lshw
   - lv
   - man
   - maven
@@ -39,7 +44,7 @@
   - sysstat
   - wget
   sudo: yes
-  yum: name={{ item }}
+  dnf: name={{ item }}
 
 - name: Enable Firewall
   sudo: yes
@@ -47,7 +52,7 @@
 
 - name: HArdware Volatile Entropy Gathering and Expansion (HAVEGE) daemon
   sudo: yes
-  yum: name=haveged
+  dnf: name=haveged
 
 - name: Enable the entropy service
   sudo: yes

@@ -13,7 +13,7 @@
   - opensc
   - mozilla-esteid
   sudo: yes
-  yum: name={{ item }}
+  dnf: name={{ item }}
 
 - name: Enable the Smart Card reader
   sudo: yes

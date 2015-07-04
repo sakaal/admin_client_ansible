@@ -9,7 +9,7 @@
   sudo: yes
   when: ansible_distribution == "Fedora" and
         ansible_distribution_version|int >= 20
-  yum: name=dnssec-trigger
+  dnf: name=dnssec-trigger
 
 - name: Enable EDNS0
   sudo: yes
