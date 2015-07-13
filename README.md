@@ -24,8 +24,10 @@ Purpose of ACS component           | Supported alternatives
 Client hardware                    | Linux compatible personal computer
 Operating System                   | Fedora
 Revision Control                   | Git
+Sensitive Data Encryption          | dm-crypt and LUKS
 Configuration Management           | Ansible
 Release Management                 | Apache Maven
+Password Manager                   | KeePass
 
 Some developer tools are included because the service instance is currently
 ongoing development and its administration is akin to software development.
@@ -110,6 +112,20 @@ keep administrative client systems completely separate from development environm
 
         sudo init_sensitive_data
 
+1. If you have a backup copy of an existing password manager database,
+   look up the master password and the key file in the document safe
+   and restore the backup.
+
+1. If you do not have a password manager database yet,
+   then generate a new strong master password and create a key file.
+   Create a new KeePass database with a composite master key using
+   the above. Keep them the same way as the other access credentials
+   above.
+   - Recommended name for the key file:
+     `com.example_username_passwords.key`
+   - Recommended name for a KeePass database file:
+     `com.example_username_passwords.kdbx`
+
 1. If the reason why you are deploying a new ACS is that there was a
    security incident, then consider revoking or at least changing all
    the private keys on the sensitive data volume, if any.
@@ -155,6 +171,7 @@ Before migration to a new ACS:
 
 1. Make sure that the latest data on the sensitive data volume has been
    backed up as appropriate, according to the usual practice.
+   - Check also the password manager database and key file.
 
 1. If you have pending or uncommitted changes in any of the local working copies
    of CMDBs or other repositories, finish them and either commit or discard
