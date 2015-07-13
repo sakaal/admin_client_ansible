@@ -125,6 +125,8 @@ keep administrative client systems completely separate from development environm
      `com.example_username_passwords.key`
    - Recommended name for a KeePass database file:
      `com.example_username_passwords.kdbx`
+   - Configure the composite master key transformation iteration
+     count in the database settings for at least 2 second delay.
 
 1. If the reason why you are deploying a new ACS is that there was a
    security incident, then consider revoking or at least changing all
