@@ -227,12 +227,12 @@ Before migration to a new ACS:
 1. Restore the data on the new ACS.
    - Restore the GnuPG public and secret keyrings and the trust database:
 
-```
-~/.gnupg/
-pubring.gpg
-secring.gpg
-trustdb.gpg
-```
+        ```
+        ~/.gnupg/
+        pubring.gpg
+        secring.gpg
+        trustdb.gpg
+        ```
 
    - Import the PGP keys and S/MIME certificates to the mail user agent.
 
