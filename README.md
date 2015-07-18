@@ -7,8 +7,8 @@ for tracking configuration items (CIs) related to
 deployment of administrative client systems.
 
 An administrative client system is service administrators' local node
-for the purpose of accessing service instance management networks
-from outside over the Internet.
+for the purpose of accessing service management networks
+from outside over the internet.
 For security reasons, administrative client systems
 are kept separate from general purpose personal computers.
 
@@ -37,20 +37,22 @@ are kept separate from general purpose personal computers.
 This Git repository contains Ansible playbooks for
 the setup of an environment based on:
 
-Purpose of ACS component           | Supported alternatives
----------------------------------- | ----------------------------------
-Client hardware                    | Linux compatible personal computer
-Operating System                   | Fedora
-Revision Control                   | Git
-Sensitive Data Encryption          | dm-crypt and LUKS
-Configuration Management           | Ansible
-Release Management                 | Apache Maven
-Password Manager                   | KeePass
+Purpose of ACS component                   | Supported alternatives
+------------------------------------------ | ----------------------------------
+Client hardware                            | Linux compatible personal computer
+Operating System                           | Fedora
+Revision control                           | Git
+Public Key Infrastructure trust management | Fedora Shared System Certificates, Java TrustStore
+Digital signing                            | GnuPG
+Sensitive data encryption                  | dm-crypt and LUKS, Ansible Vault
+Configuration Management                   | Ansible
+Release management                         | Apache Maven
+Password management                        | KeePass
 
-Some developer tools are included because the service instance is currently
-ongoing development and its administration is akin to software development.
-With more mature services, install only the tools that you need and
-keep administrative client systems completely separate from development environments.
+Some developer tools are included because the service concept is currently
+ongoing development. With more mature services, install only the tools
+that you need and keep administrative client systems completely separate
+from development environments.
 
 ## Prerequisites
 
@@ -89,7 +91,8 @@ keep administrative client systems completely separate from development environm
 
 1. Keep redundant copies of the local access credentials secure in offline
    document safes at two or more geographically separated locations,
-   one of which may reside with each person responsible for administrative duties.
+   one of which may reside with each person
+   responsible for administrative duties.
 
 1. As the local user on the newly installed client,
    prepare the ACS configuration deployment:
