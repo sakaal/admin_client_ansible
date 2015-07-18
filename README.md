@@ -14,6 +14,24 @@ are kept separate from general purpose personal computers.
 
 ![Deployment diagram](admin_client_deployment.png "Deployment diagram")
 
+## Requirements
+
+### Secure stand-alone bootstrapping
+
+1. All the following actions must be possible to perform securely
+   even when other managed systems and networks are offline or potentially
+   compromised, and only untrusted internet access is available if necessary.
+
+1. A new ACS can be set up on any standard, modern personal computer that
+   satisfies the minimum system requirements.
+
+1. Administrative access credentials can be restored from archives or
+   backup copies and deployed locally on the ACS.
+
+1. Configuration data and source code modules can be restored from archives
+   or revision control and their integrity verified on the ACS
+   after the relevant access credentials have been deployed.
+
 ## Current implementation
 
 This Git repository contains Ansible playbooks for
