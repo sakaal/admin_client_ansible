@@ -5,26 +5,9 @@
 # DNSSEC validating resolver and SSHFP host key verification
 #
 
-- name: Local DNS resolver trusted for the DNSSEC validation
-  sudo: yes
-  when: ansible_distribution == "Fedora" and
-        ansible_distribution_version|int >= 20
-  dnf: name=dnssec-trigger
-
-- name: Enable EDNS0
-  sudo: yes
-  when: ansible_distribution == "Fedora" and
-        ansible_distribution_version|int >= 20
-  lineinfile: dest=/etc/profile.d/resolv.sh
-              create=yes
-              regexp="^.*RES_OPTIONS=.*$"
-              line="export RES_OPTIONS=edns0"
-
-- name: Enable DNSSEC validation
-  sudo: yes
-  when: ansible_distribution == "Fedora" and
-        ansible_distribution_version|int >= 20
-  service: name=dnssec-triggerd enabled=yes state=started
+- when: ansible_distribution == "Fedora" and
+        {{ ansible_distribution_version | version_compare('17', '>=') }}
+  include: fedora17.yml
 
 - name: Enable SSH host key DNS verification (SSHFP)
   sudo: yes

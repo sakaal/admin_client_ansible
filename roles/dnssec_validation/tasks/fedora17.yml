@@ -1,0 +1,32 @@
+---
+# file: roles/dnssec_validation/tasks/fedora17.yml
+
+#
+# Fedora 17+ DNSSEC validating resolver
+#
+
+- assert:
+    that:
+    - ansible_distribution == "Fedora"
+    - "{{ ansible_distribution_version | version_compare('17', '>=') }}"
+
+- name: Local DNS resolver trusted for the DNSSEC validation
+  with_items:
+  - unbound
+  - dnssec-trigger
+  sudo: yes
+  dnf: name={{ item }}
+
+- name: Enable EDNS0
+  sudo: yes
+  lineinfile: dest=/etc/profile.d/resolv.sh
+              create=yes
+              regexp="^.*RES_OPTIONS=.*$"
+              line="export RES_OPTIONS=edns0"
+
+- name: Enable DNSSEC validation
+  with_items:
+  - unbound
+  - dnssec-triggerd
+  sudo: yes
+  service: name={{ item }} enabled=yes state=started
