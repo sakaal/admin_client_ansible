@@ -11,7 +11,7 @@
   - authconfig
   - authconfig-gtk
   - opensc
-  - mozilla-esteid
+  - firefox-esteid-plugin
   sudo: yes
   dnf: name={{ item }}
 
