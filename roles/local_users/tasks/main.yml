@@ -2,15 +2,16 @@
 # file: roles/local_users/tasks/main.yml
 
 - name: Local user accounts
-  with_dict: local_users
+  with_dict: local_users | default([])
   sudo: yes
-  user: name={{ item.key }}
+  user: name="{{ item.key }}"
         comment="{{ item.value.fullname | mandatory }}"
         append=yes
-        groups="{{ item.value.groups }}"
+        groups="{{ item.value.groups | default([]) }}"
         shell="{{ item.value.shell | default('/bin/bash') }}"
         generate_ssh_key=yes
-        ssh_key_comment="{{ item.key }}@{{ ansible_fqdn }}-{{ ansible_date_time.iso8601 }}"
+        ssh_key_bits=4096
+        ssh_key_comment="{{ item.key }}@{{ ansible_fqdn }}_{{ ansible_date_time.iso8601 }}"
         state=present
 
 - name: Configure sudoers
@@ -24,14 +25,22 @@
 
 - name: Local user Git configurations
   with_dict: local_users
-  template: src=gitconfig.j2 dest=/home/{{ item.key }}/.gitconfig owner={{ item.key }} group={{ item.key }} mode=0664 force=no
+  template: src=gitconfig.j2
+            dest=/home/{{ item.key }}/.gitconfig
+            owner={{ item.key }} group={{ item.key }} mode=0664
+            force=no
 
 - name: Local user Maven settings directories
   with_dict: local_users
   sudo: yes
-  file: path=/home/{{ item.key }}/.m2 state=directory owner={{ item.key }} group={{ item.key }}
+  file: state=directory
+        path=/home/{{ item.key }}/.m2
+        owner={{ item.key }} group={{ item.key }}
 
 - name: Local user Maven settings
   with_dict: local_users
   sudo: yes
-  template: src=settings.xml.j2 dest=/home/{{ item.key }}/.m2/settings.xml owner={{ item.key }} group={{ item.key }} mode=0660 force=no backup=yes
+  template: src=settings.xml.j2
+            dest=/home/{{ item.key }}/.m2/settings.xml
+            owner={{ item.key }} group={{ item.key }} mode=0660
+            force=no backup=yes
