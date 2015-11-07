@@ -23,6 +23,12 @@
   sudo: yes
   lineinfile: dest=/etc/sudoers state=present regexp="{{ item.regexp }}" line="{{ item.line }}" validate='visudo -qcf %s'
 
+- name: Local user workspace directories
+  with_dict: local_users
+  file: state=directory
+        path=/home/{{ item.key }}/workspace
+        owner={{ item.key }} group={{ item.key }}
+
 - name: Local user Git configurations
   with_dict: local_users
   template: src=gitconfig.j2
