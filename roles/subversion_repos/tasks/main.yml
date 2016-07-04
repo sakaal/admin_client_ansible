@@ -1,13 +1,13 @@
----
 # file: roles/subversion_repos/tasks/main.yml
+---
 
 - name: Subversion
-  sudo: yes
+  become: yes
   dnf: name=subversion state=present
 
 - name: Checkout sources from Subversion repositories
-  with_items: subversion_repos
-  sudo: yes
-  sudo_user: "{{ item.user | mandatory }}"
+  with_items: "{{ subversion_repos | default([]) }}"
+  become: yes
+  become_user: "{{ item.user | mandatory }}"
   subversion: repo={{ item.url | mandatory }}
               dest={{ item.dest | mandatory }}

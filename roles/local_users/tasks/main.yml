@@ -1,9 +1,9 @@
----
 # file: roles/local_users/tasks/main.yml
+---
 
 - name: Local user accounts
-  with_dict: local_users | default([])
-  sudo: yes
+  with_dict: "{{ local_users | default([]) }}"
+  become: yes
   user: name="{{ item.key }}"
         comment="{{ item.value.fullname | mandatory }}"
         append=yes
@@ -20,33 +20,33 @@
       line: '%wheel ALL=(ALL) NOPASSWD:ALL'
     - regexp: '^Defaults\s+secure_path'
       line: 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin'
-  sudo: yes
+  become: yes
   lineinfile: dest=/etc/sudoers state=present regexp="{{ item.regexp }}" line="{{ item.line }}" validate='visudo -qcf %s'
 
 - name: Local user workspace directories
-  with_dict: local_users
+  with_dict: "{{ local_users }}"
   file: state=directory
         path=/home/{{ item.key }}/workspace
-        owner={{ item.key }} group={{ item.key }}
+        owner="{{ item.key }}" group="{{ item.key }}"
 
 - name: Local user Git configurations
-  with_dict: local_users
+  with_dict: "{{ local_users }}"
   template: src=gitconfig.j2
-            dest=/home/{{ item.key }}/.gitconfig
-            owner={{ item.key }} group={{ item.key }} mode=0664
+            dest="/home/{{ item.key }}/.gitconfig"
+            owner="{{ item.key }}" group="{{ item.key }}" mode=0664
             force=no
 
 - name: Local user Maven settings directories
-  with_dict: local_users
-  sudo: yes
+  with_dict: "{{ local_users }}"
+  become: yes
   file: state=directory
-        path=/home/{{ item.key }}/.m2
-        owner={{ item.key }} group={{ item.key }}
+        path="/home/{{ item.key }}/.m2"
+        owner="{{ item.key }}" group="{{ item.key }}"
 
 - name: Local user Maven settings
-  with_dict: local_users
-  sudo: yes
+  with_dict: "{{ local_users }}"
+  become: yes
   template: src=settings.xml.j2
-            dest=/home/{{ item.key }}/.m2/settings.xml
-            owner={{ item.key }} group={{ item.key }} mode=0660
+            dest="/home/{{ item.key }}/.m2/settings.xml"
+            owner="{{ item.key }}" group="{{ item.key }}" mode=0660
             force=no backup=yes

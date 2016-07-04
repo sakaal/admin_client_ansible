@@ -1,21 +1,26 @@
----
 # file: roles/common/tasks/main.yml
+---
 
 - name: Dandified Yum
-  sudo: yes
+  when: ansible_pkg_mgr == "yum"
+  become: yes
   yum: name=dnf
 
+- name: DNF system upgrade plugin
+  become: yes
+  dnf: name=dnf-plugin-system-upgrade
+
 - name: Enable Ansible under SELinux
-  sudo: yes
+  become: yes
   dnf: name=libselinux-python
 
 - name: Single Packet Authentication (SPA) support
-  sudo: yes
+  become: yes
   when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
   dnf: name=fwknop
 
 - name: Non-interactive SSH password authentication support
-  sudo: yes
+  become: yes
   dnf: name=sshpass
 
 - name: Common packages
@@ -38,26 +43,34 @@
   - nano
   - postgresql
   - pv
-  - python-boto
+  - python2-boto
   - python-passlib
   - rkhunter
   - screen
   - sysstat
   - wget
-  sudo: yes
-  dnf: name={{ item }}
+  become: yes
+  dnf: name="{{ item }}"
 
 - name: Enable Firewall
-  sudo: yes
-  service: name=firewalld enabled=yes state=started
+  become: yes
+  service: name=firewalld enabled=yes
+
+- name: Start Firewall
+  become: yes
+  service: name=firewalld state=started
 
 - name: HArdware Volatile Entropy Gathering and Expansion (HAVEGE) daemon
-  sudo: yes
+  become: yes
   dnf: name=haveged
 
 - name: Enable the entropy service
-  sudo: yes
-  service: name=haveged enabled=yes state=started
+  become: yes
+  service: name=haveged enabled=yes
+
+- name: Start the entropy service
+  become: yes
+  service: name=haveged state=started
 
 #
 # http://keyring.debian.org/creating-key.html
@@ -76,4 +89,3 @@
               insertafter=EOF
               create=yes
               state=present
-

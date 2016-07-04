@@ -1,16 +1,15 @@
----
 # file: roles/dnssec_validation/tasks/main.yml
-
 #
 # DNSSEC validating resolver and SSHFP host key verification
 #
+---
 
 - when: ansible_distribution == "Fedora" and
         ansible_distribution_version | version_compare('17', '>=')
   include: fedora17.yml
 
 - name: Enable SSH host key DNS verification (SSHFP)
-  sudo: yes
+  become: yes
   lineinfile: dest=/etc/ssh/ssh_config
               regexp="^VerifyHostKeyDNS"
               line="VerifyHostKeyDNS yes"

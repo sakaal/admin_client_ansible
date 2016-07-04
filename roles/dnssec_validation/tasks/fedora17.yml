@@ -1,9 +1,8 @@
----
 # file: roles/dnssec_validation/tasks/fedora17.yml
-
 #
 # Fedora 17+ DNSSEC validating resolver
 #
+---
 
 - assert:
     that:
@@ -14,11 +13,11 @@
   with_items:
   - unbound
   - dnssec-trigger
-  sudo: yes
+  become: yes
   dnf: name={{ item }}
 
 - name: Enable EDNS0
-  sudo: yes
+  become: yes
   lineinfile: dest=/etc/profile.d/resolv.sh
               create=yes
               regexp="^.*RES_OPTIONS=.*$"
@@ -28,5 +27,5 @@
   with_items:
   - unbound
   - dnssec-triggerd
-  sudo: yes
+  become: yes
   service: name={{ item }} enabled=yes state=started

@@ -1,5 +1,5 @@
----
 # file: roles/common/tasks/smart_cards.yml
+---
 
 - name: Smart Card support packages
   with_items:
@@ -12,10 +12,10 @@
   - authconfig-gtk
   - opensc
   - firefox-esteid-plugin
-  sudo: yes
-  dnf: name={{ item }}
+  become: yes
+  dnf: name="{{ item }}"
 
 - name: Enable the Smart Card reader
-  sudo: yes
+  become: yes
   service: name=pcscd enabled=yes state=started
 

@@ -1,36 +1,37 @@
----
 # file: roles/sensitive_data/tasks/main.yml
-
+#
 # Sensitive data management allows deploying and backing up private credentials
 # such as digital certificates, private key materials, and password files
 # without writing them in clear text.
+#
+---
 
 - name: Packages
   with_items:
   - cryptsetup
-  sudo: yes
+  become: yes
   dnf: name={{ item }} state=present
 
 - name: Sensitive data management initialization script
-  sudo: yes
+  become: yes
   template: src=init_sensitive_data.j2
             dest=/usr/local/sbin/init_sensitive_data
             owner=root group=root mode=0700
 
 - name: Sensitive data volume opening script
-  sudo: yes
+  become: yes
   template: src=open_sensitive_data.j2
             dest=/usr/local/sbin/open_sensitive_data
             owner=root group=root mode=0700
 
 - name: Sensitive data volume closing script
-  sudo: yes
+  become: yes
   template: src=close_sensitive_data.j2
             dest=/usr/local/sbin/close_sensitive_data
             owner=root group=root mode=0700
 
 - name: Ansible Vault password file location
-  sudo: yes
+  become: yes
   ini_file: dest=/etc/ansible/ansible.cfg
             section=defaults
             option=vault_password_file

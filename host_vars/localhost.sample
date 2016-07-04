@@ -1,5 +1,5 @@
----
 # file: host_vars/localhost
+---
 
 #
 # Location to deploy local copies of configuration repositories:

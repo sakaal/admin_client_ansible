@@ -1,5 +1,5 @@
----
 # file: admin_client.yml
+---
 
 - hosts: localhost
   connection: local
