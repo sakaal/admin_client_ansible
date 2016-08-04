@@ -9,5 +9,5 @@
   with_items: "{{ subversion_repos | default([]) }}"
   become: yes
   become_user: "{{ item.user | mandatory }}"
-  subversion: repo={{ item.url | mandatory }}
-              dest={{ item.dest | mandatory }}
+  subversion: repo="{{ item.url | mandatory }}"
+              dest="{{ item.dest | mandatory }}"

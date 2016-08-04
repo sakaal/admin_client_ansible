@@ -25,6 +25,7 @@
 
 - name: Common packages
   with_items:
+  - dnf-plugin-system-upgrade
   - firewalld
   - gdb
   - gimp
