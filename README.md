@@ -113,7 +113,7 @@ from development environments.
 
 1. Create or edit `~/.vault_pass.txt` with the configuration database
    encryption password as a single line. Keep a backup copy of the password
-   in the document safe. Copy the password file for use with sudo:
+   in the document safes. Copy the password file for use with sudo:
 
         sudo cp ~/.vault_pass.txt /root/.vault_pass.txt
         sudo chown root:root /root/.vault_pass.txt
@@ -191,6 +191,12 @@ have accumulated locally even though the system is for administrative use only.
   managed in this CMDB.
 
 Before migration to a new ACS:
+
+1. Find copies of the relevant access credentials in the document safes.
+   - Local access credentials
+   - Configuration database encryption password
+   - Sensitive data image passphrase
+   - Password manager database master password and key file
 
 1. Make sure that the latest data on the sensitive data volume has been
    backed up as appropriate, according to the usual practice.
