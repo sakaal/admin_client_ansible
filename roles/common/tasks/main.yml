@@ -6,6 +6,12 @@
   become: yes
   yum: name=dnf
 
+- name: Ansible DNF dependencies
+  become: yes
+  with_items:
+  - python2-dnf
+  yum: name="{{ item }}"
+
 - name: DNF system upgrade plugin
   become: yes
   dnf: name=dnf-plugin-system-upgrade
@@ -16,7 +22,8 @@
 
 - name: Single Packet Authentication (SPA) support
   become: yes
-  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 14
+  when: ansible_distribution == "Fedora" and
+        ansible_distribution_version|int >= 14
   dnf: name=fwknop
 
 - name: Non-interactive SSH password authentication support
@@ -25,7 +32,6 @@
 
 - name: Common packages
   with_items:
-  - dnf-plugin-system-upgrade
   - firewalld
   - gdb
   - gimp
@@ -45,7 +51,7 @@
   - postgresql
   - pv
   - python2-boto
-  - python-passlib
+  - python2-passlib
   - rkhunter
   - screen
   - sysstat
