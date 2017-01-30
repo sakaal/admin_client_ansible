@@ -4,9 +4,10 @@
 - name: Dandified Yum
   when: ansible_pkg_mgr == "yum"
   become: yes
-  yum: name=dnf
+  yum: name="dnf"
 
 - name: Ansible DNF dependencies
+  when: ansible_pkg_mgr == "yum"
   become: yes
   with_items:
   - python2-dnf
@@ -14,21 +15,21 @@
 
 - name: DNF system upgrade plugin
   become: yes
-  dnf: name=dnf-plugin-system-upgrade
+  dnf: name="dnf-plugin-system-upgrade"
 
 - name: Enable Ansible under SELinux
   become: yes
-  dnf: name=libselinux-python
+  dnf: name="libselinux-python"
 
 - name: Single Packet Authentication (SPA) support
   become: yes
   when: ansible_distribution == "Fedora" and
         ansible_distribution_version|int >= 14
-  dnf: name=fwknop
+  dnf: name="fwknop"
 
 - name: Non-interactive SSH password authentication support
   become: yes
-  dnf: name=sshpass
+  dnf: name="sshpass"
 
 - name: Common packages
   with_items:
@@ -61,23 +62,23 @@
 
 - name: Enable Firewall
   become: yes
-  service: name=firewalld enabled=yes
+  service: name="firewalld" enabled=yes
 
 - name: Start Firewall
   become: yes
-  service: name=firewalld state=started
+  service: name="firewalld" state=started
 
 - name: HArdware Volatile Entropy Gathering and Expansion (HAVEGE) daemon
   become: yes
-  dnf: name=haveged
+  dnf: name="haveged"
 
 - name: Enable the entropy service
   become: yes
-  service: name=haveged enabled=yes
+  service: name="haveged" enabled=yes
 
 - name: Start the entropy service
   become: yes
-  service: name=haveged state=started
+  service: name="haveged" state=started
 
 #
 # http://keyring.debian.org/creating-key.html
