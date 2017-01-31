@@ -214,6 +214,7 @@ Before migration to a new ACS:
 
 1. Create an archive of all the other local data that you intend to keep.
    - Key rings and trust databases (GPG, Java KeyStores)
+   - SSH client configuration (`~/.ssh/config`)
    - Home directories (personal identities, settings, workspaces, documents,
      pictures, downloads, etc.)
 
