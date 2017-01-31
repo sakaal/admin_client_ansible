@@ -33,12 +33,14 @@
 
 - name: Common packages
   with_items:
+  - emacs
   - firewalld
   - gdb
   - gimp
   - git
   - gnupg
   - htop
+  - iotop
   - jwhois
   - keepass
   - lftp
@@ -49,10 +51,15 @@
   - maven
   - midori
   - nano
+  - parallel
   - postgresql
   - pv
   - python2-boto
   - python2-passlib
+  - python-cffi
+  - python-dns
+  - python-firewall
+  - python-netaddr
   - rkhunter
   - screen
   - sysstat
