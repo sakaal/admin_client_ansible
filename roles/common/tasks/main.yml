@@ -33,6 +33,7 @@
 
 - name: Common packages
   with_items:
+  - colordiff
   - emacs
   - firewalld
   - gdb
