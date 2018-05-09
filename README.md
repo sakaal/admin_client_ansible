@@ -111,13 +111,24 @@ from development environments.
 
         ansible-playbook -K admin_client.yml -i local
 
-1. Create or edit `~/.vault_pass.txt` with the configuration database
-   encryption password as a single line. Keep a backup copy of the password
-   in the document safes. Copy the password file for use with sudo:
+1. Choose a label to identify your configuration database encryption
+   password. Using labeled identities allows changing the
+   password when needed. A recommended naming practice is to use
+   the simple name of your domain and the date when the password
+   was created, such as `example20180510`, so you can easily
+   distinguish between the old and new passwords.
 
-        sudo cp ~/.vault_pass.txt /root/.vault_pass.txt
-        sudo chown root:root /root/.vault_pass.txt
-        sudo chmod 0600 /root/.vault_pass.txt
+1. Create or edit `~/.vault_pass-{vault_id}.txt` replacing `{vault_id}`
+   in the file name with the label of the configuration database
+   encryption password. The file must only contain a single line
+   that is the configuration database encryption password.
+
+   Keep a backup copy of the password and label in the document safes.
+   Copy the password file for use with sudo:
+
+        sudo cp ~/.vault_pass-{vault_id}.txt /root/.vault_pass-{vault_id}.txt
+        sudo chown root:root /root/.vault_pass-{vault_id}.txt
+        sudo chmod 0600 /root/.vault_pass-{vault_id}.txt
 
 1. If you have a backup copy of an existing sensitive data image,
    look up the passphrase in the document safe and restore the backup.
@@ -194,7 +205,7 @@ Before migration to a new ACS:
 
 1. Find copies of the relevant access credentials in the document safes.
    - Local access credentials
-   - Configuration database encryption password
+   - Configuration database encryption password and label
    - Sensitive data image passphrase
    - Password manager database master password and key file
 
