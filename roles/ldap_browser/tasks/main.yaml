@@ -1,0 +1,36 @@
+# file: roles/ldap_browser/tasks/main.yaml
+#
+# http://jxplorer.org/downloads/
+#
+---
+
+- set_fact:
+    jxplorer_archive: "jxplorer-3.3.1-project.zip"
+    jxplorer_md5sum: "bf58eccc7fe5c323a2ecce52c237bd13"
+
+- set_fact:
+    jxplorer_url: "http://sourceforge.net/projects/jxplorer/files/jxplorer/version%203.3.1/{{ jxplorer_archive }}/download"
+
+- name: Download the JXplorer archive
+  become: yes
+  command:
+    _raw_params: >-
+      wget -nv --no-cookies --no-check-certificate
+      "{{ jxplorer_url }}" -O "{{ jxplorer_archive }}"
+  args:
+    chdir: /opt
+    creates: "{{ jxplorer_archive }}"
+
+- name: Verify the JXplorer archive
+  become: yes
+  stat:
+    path: "/opt/{{ jxplorer_archive }}"
+    checksum_algorithm: md5
+  register: jxplorer
+  failed_when: jxplorer.stat.checksum != jxplorer_md5sum
+
+- name: Self-executable JXplorer archive
+  become: yes
+  file: path="/opt/{{ jxplorer_archive }}" mode=774
+
+# Run the installer manually.

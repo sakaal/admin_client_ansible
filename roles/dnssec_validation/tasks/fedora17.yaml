@@ -1,4 +1,4 @@
-# file: roles/dnssec_validation/tasks/fedora17.yml
+# file: roles/dnssec_validation/tasks/fedora17.yaml
 #
 # Fedora 17+ DNSSEC validating resolver
 #
@@ -7,7 +7,7 @@
 - assert:
     that:
     - ansible_distribution == "Fedora"
-    - "{{ ansible_distribution_version | version_compare('17', '>=') }}"
+    - "{{ ansible_distribution_version is version_compare('17', '>=') }}"
 
 - name: Local DNS resolver trusted for the DNSSEC validation
   with_items:
