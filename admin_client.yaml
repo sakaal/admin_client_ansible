@@ -1,11 +1,10 @@
-# file: admin_client.yml
+# file: admin_client.yaml
 ---
 
 - hosts: localhost
   connection: local
   roles:
   - common
-  - smart_cards
   - dnssec_validation
   - local_users
   - fedora_rpm_fusion
