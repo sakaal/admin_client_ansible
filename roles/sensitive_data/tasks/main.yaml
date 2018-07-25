@@ -1,4 +1,4 @@
-# file: roles/sensitive_data/tasks/main.yml
+# file: roles/sensitive_data/tasks/main.yaml
 #
 # Sensitive data management allows deploying and backing up private credentials
 # such as digital certificates, private key materials, and password files

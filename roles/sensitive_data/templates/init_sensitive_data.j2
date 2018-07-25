@@ -11,9 +11,9 @@ fi
 
 set -o errexit
 
-FSPATH={{ sensitive_data_image | mandatory }}
+FSPATH={{ sensitive_data_image }}
 LOOPD=$(losetup -f)
-MOUNTP={{ sensitive_data_mount_point | mandatory }}
+MOUNTP={{ sensitive_data_mount_point }}
 SIZE=64
 
 if [[ -f $FSPATH ]]; then

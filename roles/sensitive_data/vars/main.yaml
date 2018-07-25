@@ -1,4 +1,4 @@
-# file: roles/sensitive_data/vars/main.yml
+# file: roles/sensitive_data/vars/main.yaml
 ---
 
 sensitive_data_image: /root/sensitive_data.img

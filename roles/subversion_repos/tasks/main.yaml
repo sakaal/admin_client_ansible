@@ -1,0 +1,16 @@
+# file: roles/subversion_repos/tasks/main.yaml
+---
+
+- name: Subversion
+  become: yes
+  dnf:
+    name: "subversion"
+    state: present
+
+- name: Checkout sources from Subversion repositories
+  with_items: "{{ subversion_repos | default([]) }}"
+  become: yes
+  become_user: "{{ item.user }}"
+  subversion:
+    repo: "{{ item.url }}"
+    dest: "{{ item.dest }}"

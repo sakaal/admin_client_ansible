@@ -1,11 +1,11 @@
-# file: roles/local_users/tasks/main.yml
+# file: roles/local_users/tasks/main.yaml
 ---
 
 - name: Local user accounts
   with_dict: "{{ local_users | default([]) }}"
   become: yes
   user: name="{{ item.key }}"
-        comment="{{ item.value.fullname | mandatory }}"
+        comment="{{ item.value.fullname }}"
         append=yes
         groups="{{ item.value.groups | default([]) }}"
         shell="{{ item.value.shell | default('/bin/bash') }}"

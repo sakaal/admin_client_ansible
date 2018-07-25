@@ -109,7 +109,7 @@ from development environments.
    You can add more local users, if multiple administrators use the same client
    or otherwise needed. Then run:
 
-        ansible-playbook -K admin_client.yml -i local
+        ansible-playbook -K admin_client.yaml -i local
 
 1. Choose a label to identify your configuration database encryption
    password. Using labeled identities allows changing the

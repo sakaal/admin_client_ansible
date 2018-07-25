@@ -1,4 +1,4 @@
-# file: roles/common/tasks/main.yml
+# file: roles/common/tasks/main.yaml
 ---
 
 - name: Dandified Yum
@@ -101,7 +101,7 @@
     val: SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
   lineinfile: dest="~/.gnupg/gpg.conf"
               regexp="^{{ item.key }}"
-              line="{{ item.key }} {{ item.val | mandatory }}"
+              line="{{ item.key }} {{ item.val }}"
               insertafter=EOF
               create=yes
               state=present

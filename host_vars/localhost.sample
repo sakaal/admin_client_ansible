@@ -23,4 +23,4 @@ subversion_repos:
 # Apache Shiro - Java security framework
 - url: "http://svn.apache.org/repos/asf/shiro/tags/shiro-root-1.2.3"
   user: jdoe
-  dest: "{{ local_cmdb_root | mandatory }}/shiro-root-1.2.3"
+  dest: "{{ local_cmdb_root }}/shiro-root-1.2.3"
