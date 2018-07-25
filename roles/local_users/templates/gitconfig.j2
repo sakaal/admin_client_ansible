@@ -1,5 +1,10 @@
+{# file: roles/local_users/templates/gitconfig.j2
+#}
 [user]
-        name = {{ item.value.fullname | mandatory }}
-        email = {{ item.value.email | mandatory }}
+        name = {{ item.value.fullname }}
+        email = {{ item.value.email }}
+[core]
+        autocrlf = input
+        hooksPath = hooks
 [push]
 	default = simple
